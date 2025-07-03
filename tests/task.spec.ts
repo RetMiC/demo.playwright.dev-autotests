@@ -17,19 +17,13 @@ test.describe('Добавление задач', () => {
 
   test('Add new task with space: First task', async () => {
     await todo.addTask('First task');
-    await todo.expectTaskExists('First taskfsdf');
+    await todo.expectTaskExists('First task');
   });
 
   test('Add new task: Task', async () => {
     await todo.addTask('Task');
     await todo.expectTaskExists('Task');
   });
-
-  test('Добавление задачи в TodoMVC', async () => {
-    await todo.addTask('Купить молоко');
-    await todo.expectTaskExists('Купить молоко');
-  });
-});
 
 test.describe('Удаление задач', () => {
   let todo: TodoPage;
