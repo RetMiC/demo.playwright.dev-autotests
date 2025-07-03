@@ -17,7 +17,7 @@ test.describe('Добавление задач', () => {
 
   test('Add new task with space: First task', async () => {
     await todo.addTask('First task');
-    await todo.expectTaskExists('First task');
+    await todo.expectTaskExists('First taskfsdf');
   });
 
   test('Add new task: Task', async () => {
