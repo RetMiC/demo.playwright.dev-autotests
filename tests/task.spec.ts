@@ -1,50 +1,31 @@
-import { test } from '@playwright/test';
-import { TodoPage } from '../pages/TodoPage';
+import { test, expect } from '../fixtures/todo-fixture';
 
 test.describe('Добавление задач', () => {
-  let todo: TodoPage;
-
-  test.beforeEach(async ({ page }) => {
-    todo = new TodoPage(page);
-    await todo.goto();
-  });
-
-  test('Можно добавить одну задачу', async () => {
+  test('Можно добавить одну задачу', async ({ todo }) => {
     await todo.addTask('Купить хлеб');
     await todo.expectTaskCount(1);
     await todo.expectTaskText(0, 'Купить хлеб');
   });
 
-  test('Add new task with space: First task', async () => {
+  test('Add new task with space: First task', async ({ todo }) => {
     await todo.addTask('First task');
     await todo.expectTaskExists('First task');
   });
 
-  test('Add new task: Task', async () => {
+  test('Add new task: Task', async ({ todo }) => {
     await todo.addTask('Task');
     await todo.expectTaskExists('Task');
   });
+});
 
 test.describe('Удаление задач', () => {
-  let todo: TodoPage;
-
-  test.beforeEach(async ({ page }) => {
-    todo = new TodoPage(page);
-    await todo.goto();
-  });
-
-  test('Можно удалить одну задачу', async () => {
-    await todo.addTask('Удалить меня');
+  test('Можно удалить одну задачу', async ({ todo, singleTask }) => {
     await todo.expectTaskCount(1);
-
     await todo.deleteTaskByIndex(0);
     await todo.expectTaskCount(0);
   });
 
-  test('Можно удалить одну из нескольких задач', async () => {
-    await todo.addTask('Остаться');
-    await todo.addTask('Удалить');
-
+  test('Можно удалить одну из нескольких задач', async ({ todo, multipleTasks }) => {
     await todo.expectTaskCount(2);
     await todo.deleteTaskByIndex(1);
     await todo.expectTaskCount(1);
